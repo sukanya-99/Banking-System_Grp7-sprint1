@@ -20,7 +20,7 @@
 #include<termios.h>
 #include<ctype.h>
 //#include "/home/cguser2/project_group5/cut/Code/Header/Header2.h"
-#include "Function.h"
+#include "../Header/Function.h"
 #define MAXPW 32
 ssize_t password(char **pw,size_t sz,int mask,FILE *fp)
 

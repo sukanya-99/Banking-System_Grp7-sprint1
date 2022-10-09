@@ -1,5 +1,5 @@
-#ifndef FUNCTION_H
-#define FUNCTION_H
+#ifndef FUNCTION_H_
+#define FUNCTION_H_
 typedef struct Customer     //Customer Structure
 {
 	char customer_id[20];
@@ -23,11 +23,11 @@ transact *start1,*last1,*new1,*ptr1,*prev1;  //Declaring pointers for transactio
 
 //Function Declaration of menus and submenus
 int createAccount();
-int doTransaction();
+void *doTransaction();
 int viewBalance();
 int editCustomer();
 int deleteCustomer();
-int doTransfer();
+void *doTransfer();
 int getTransactionReport();
 int getCustomerReport();
 int customer_file_to_list();

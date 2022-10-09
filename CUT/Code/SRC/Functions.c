@@ -4,8 +4,8 @@
 #include<ctype.h>
 #include<pthread.h>
 #include<time.h>
-#include "Utility.h"
-#include "Function.h"
+#include "../Header/Utility.h"
+#include "../Header/Function.h"
 
 int createAccount() //This function is to create an account
 
@@ -232,7 +232,7 @@ int editCustomer() //Edit the details of customer details with all validations
 	int flag=0;
 	char name[30];
 	char  m_account_type[10];
-	char m_aadhar_no[10];
+	char m_aadhar_no[15];
 
 	printf("\nEnter the customer id\n");
 	scanf("%s",m_customer_id);

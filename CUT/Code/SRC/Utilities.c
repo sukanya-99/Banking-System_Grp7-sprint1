@@ -2,8 +2,8 @@
 #include<ctype.h>
 #include<stdlib.h>
 #include<pthread.h>
-#include"Utility.h"
-#include"Function.h"
+#include"../Header/Utility.h"
+#include"../Header/Function.h"
 pthread_mutex_t lock=PTHREAD_MUTEX_INITIALIZER; //Initialize mutex
 pthread_t thread_id; //Initialize thread id
 int customerCorner()
@@ -24,7 +24,7 @@ printf("\n\n\t\t 1. Create Account\n\t\t 2. Do Transaction\n\t\t 3. View Balance
 		{
 			case 1 : createAccount(); // calls Create_Account from Function.c
 				 break;
-			case 2 : pthread_create(&thread_id,NULL,doTransaction,NULL); // starting a new thread in function calling process
+			case 2 : pthread_create(&thread_id,NULL,doTransaction,(void *)NULL); // starting a new thread in function calling process
 				 pthread_join(thread_id,NULL); // this provides a mechanism allowing an application to wait for thread to terminate
 				 break;
 			case 3 : viewBalance();    // calls View_Balance from Function.c
@@ -53,7 +53,7 @@ printf("\n\n\t\t 1. Edit Customer details\n\t\t 2. Delete Customer Details\n\t\t
 				 break;
 			case 2 : deleteCustomer();  // calls Delete_Customer from Function.c
 				 break;
-			case 3 :pthread_create(&thread_id,NULL,doTransfer,NULL);// calls Do_Transfer from Function.c
+			case 3 :pthread_create(&thread_id,NULL,doTransfer,(void *)NULL);// calls Do_Transfer from Function.c
 			        pthread_join(thread_id,NULL);
 				 break;
 			case 4 : getTransactionReport();  // calls from Get_Transaction_Report from Function.c
@@ -65,7 +65,7 @@ printf("\n\n\t\t 1. Edit Customer details\n\t\t 2. Delete Customer Details\n\t\t
 		}
 	}
 }
-int doTransaction()//allows user to withdraw and deposit amount
+void *doTransaction()//allows user to withdraw and deposit amount
 {
 	int token,auto_token;
 	time_t t1;
@@ -186,7 +186,7 @@ int doTransaction()//allows user to withdraw and deposit amount
 	}
 }
 
-int doTransfer()// Transfer money from one account to another account
+void *doTransfer()// Transfer money from one account to another account
 {
 	char s_account[20];
 	char d_account[20];
@@ -225,6 +225,7 @@ int doTransfer()// Transfer money from one account to another account
 		if(flag==0)
 		{
 		printf("\nSource Account not Found!!!\n");
+		return 0;
 		}
 		printf("\nDestination Account Number/Id\n");
 		scanf("%s",d_account);
