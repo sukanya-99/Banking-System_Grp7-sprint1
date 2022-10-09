@@ -1,0 +1,517 @@
+        -:    0:Source:Utilities.c
+        -:    0:Graph:main.gcno
+        -:    0:Data:main.gcda
+        -:    0:Runs:1
+        -:    1:#include<stdio.h> // Include required header files
+        -:    2:#include<ctype.h>
+        -:    3:#include<stdlib.h>
+        -:    4:#include<pthread.h>
+        -:    5:#include"Utility.h"
+        -:    6:#include"Function.h"
+        -:    7:pthread_mutex_t lock=PTHREAD_MUTEX_INITIALIZER; //Initialize mutex
+        -:    8:pthread_t thread_id; //Initialize thread id
+function customerCorner called 1 returned 100% blocks executed 95%
+        1:    9:int customerCorner()
+        -:   10:{
+        1:   11:	int choice=0;
+        5:   12:	while(choice!=4)
+branch  0 taken 4
+branch  1 taken 1 (fallthrough)
+        -:   13:	{
+        -:   14:
+        -:   15:		//system("clear");
+        -:   16:
+        4:   17:printf("\n\n\t\t\t\tCustomer Corner");
+call    0 returned 4
+        4:   18:printf("\n\n\n\t\t\t\xB2\xB2\xB2\xB2\xB2\xB2\xB2 Welcome to Customer Facilities \xB2\xB2\xB2\xB2\xB2\xB2\xB2");
+call    0 returned 4
+        4:   19:printf("\n\n\t\t 1. Create Account\n\t\t 2. Do Transaction\n\t\t 3. View Balance\n\t\t 4. Back to Main Menu\n");
+call    0 returned 4
+        4:   20:		printf("\n___________________\n\n");
+call    0 returned 4
+        4:   21:		printf("\n   Enter your choice:");
+call    0 returned 4
+        4:   22:		scanf("%d",&choice);
+call    0 returned 4
+        4:   23:		switch(choice)
+branch  0 taken 1
+branch  1 taken 1
+branch  2 taken 1
+branch  3 taken 1
+branch  4 taken 0
+        -:   24:		{
+        1:   25:			case 1 : createAccount(); // calls Create_Account from Function.c
+call    0 returned 1
+        1:   26:				 break;
+        1:   27:			case 2 : pthread_create(&thread_id,NULL,doTransaction,(void *)NULL); // starting a new thread in function calling process
+call    0 returned 1
+        1:   28:				 pthread_join(thread_id,NULL); // this provides a mechanism allowing an application to wait for thread to terminate
+call    0 returned 1
+        1:   29:				 break;
+        1:   30:			case 3 : viewBalance();    // calls View_Balance from Function.c
+call    0 returned 1
+        1:   31:				 break;
+        1:   32:			case 4 : break;            //returns to main menu in The Banking System
+    #####:   33:			default : printf("\nInvalid Choice\n");
+call    0 never executed
+        -:   34:		}
+        -:   35:	}
+        1:   36:}
+        -:   37:
+function bankerCorner called 1 returned 100% blocks executed 74%
+        1:   38:int bankerCorner()
+        -:   39:{
+        1:   40:	int choice=0;
+        5:   41:	while(choice!=6)
+branch  0 taken 4
+branch  1 taken 1 (fallthrough)
+        -:   42:	{
+        -:   43:	   // system("clear");
+        4:   44:printf("\n\n\t\t\t\tBanker's Corner");
+call    0 returned 4
+        4:   45:printf("\n\n\n\t\t\t\xB2\xB2\xB2\xB2\xB2\xB2\xB2 Welcome to Banker's Corner \xB2\xB2\xB2\xB2\xB2\xB2\xB2");
+call    0 returned 4
+        4:   46:printf("\n\n\t\t 1. Edit Customer details\n\t\t 2. Delete Customer Details\n\t\t 3. Do Transfer\n\t\t 4. Get Transaction report\n\t\t 5. Get Customer Report\n\t\t 6. Back to Main Menu.\n");
+call    0 returned 4
+        4:   47:		printf("\n_________________________\n\n");
+call    0 returned 4
+        4:   48:		printf("\nEnter your Choice:\n");
+call    0 returned 4
+        4:   49:		scanf("%d",&choice);
+call    0 returned 4
+        4:   50:		switch(choice)
+branch  0 taken 1
+branch  1 taken 1
+branch  2 taken 0
+branch  3 taken 0
+branch  4 taken 1
+branch  5 taken 1
+branch  6 taken 0
+        -:   51:		{
+        1:   52:			case 1 : editCustomer();   // calls Edit_Customer from Function.c
+call    0 returned 1
+        1:   53:				 break;
+        1:   54:			case 2 : deleteCustomer();  // calls Delete_Customer from Function.c
+call    0 returned 1
+        1:   55:				 break;
+    #####:   56:			case 3 :pthread_create(&thread_id,NULL,doTransfer,(void *)NULL);// calls Do_Transfer from Function.c
+call    0 never executed
+    #####:   57:			        pthread_join(thread_id,NULL);
+call    0 never executed
+    #####:   58:				 break;
+    #####:   59:			case 4 : getTransactionReport();  // calls from Get_Transaction_Report from Function.c
+call    0 never executed
+    #####:   60:				 break;
+        1:   61:			case 5 : getCustomerReport(); // calls Get_Customer_Report from Function.c
+call    0 returned 1
+        1:   62:				 break;
+        1:   63:			case 6 : break;
+    #####:   64:			default : printf("\n Invalid Choice\n");
+call    0 never executed
+        -:   65:		}
+        -:   66:	}
+        1:   67:}
+function doTransaction called 1 returned 100% blocks executed 51%
+        1:   68:void *doTransaction()//allows user to withdraw and deposit amount
+        -:   69:{
+        -:   70:	int token,auto_token;
+        -:   71:	time_t t1;
+        1:   72:	int choice=0;
+        1:   73:	double amount=0;
+        -:   74:	char m_customer_id[20];
+        1:   75:	double b_amount=0;
+        1:   76:	printf("\nEnter\n1: Withdraw\n2. Deposit\n3. Back to menu\n");
+call    0 returned 1
+        1:   77:	scanf("%d",&choice);
+call    0 returned 1
+        1:   78:	if(choice==3)
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+    #####:   79:		return 0;
+        1:   80:	printf("\nEnter your Customer id\n");
+call    0 returned 1
+        1:   81:	scanf("%s",m_customer_id);
+call    0 returned 1
+        1:   82:	int flag=0;
+       1*:   83:	for(ptr=start;(ptr);ptr=ptr->next)
+branch  0 taken 1
+branch  1 taken 0 (fallthrough)
+        -:   84:	{
+        1:   85:		if(strcmp(ptr->customer_id,m_customer_id)==0)
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        -:   86:		{
+        1:   87:		flag=1;
+        1:   88:		break;
+        -:   89:		}
+        -:   90:
+        -:   91:	}
+        1:   92:	if(flag==0)
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+        -:   93:	{
+    #####:   94:	printf("\n Customer ID  not found!!!\n");
+call    0 never executed
+    #####:   95:			return 0;
+        -:   96:	}
+        1:   97:	srand((unsigned) time(&t1));//generates a random unique number for token
+call    0 returned 1
+call    1 returned 1
+        1:   98:	auto_token=rand() % 50;
+call    0 returned 1
+        1:   99:        pthread_mutex_lock(&lock); //release mutex object
+call    0 returned 1
+        1:  100:	printf("\n Your token for current transaction is %d\n",auto_token);
+call    0 returned 1
+        1:  101:	pthread_mutex_unlock(&lock); //lock a mutex object which identifies a mutex
+call    0 returned 1
+        1:  102:	printf("\n PLEASE CONFIRM YOUR TOKEN\n");
+call    0 returned 1
+        1:  103:	scanf("%d",&token);
+call    0 returned 1
+        1:  104:	if(token==auto_token)//checks the token
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        -:  105:	{
+        -:  106:
+        1:  107:		if(choice==1)//withdraw option
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        -:  108:		{
+       1*:  109:			for(ptr=start;(ptr)&&(strcmp(ptr->customer_id,m_customer_id)!=0);ptr=ptr->next);
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+branch  2 taken 0
+branch  3 taken 1 (fallthrough)
+        1:  110:			if(ptr==NULL)//checks if pointer is null then it will print id is not found else it will do transaction
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+        -:  111:			{
+    #####:  112:				printf("\n%s Customer id is not Found\n",m_customer_id);
+call    0 never executed
+        -:  113:
+    #####:  114:				return 0;
+        -:  115:			}
+        -:  116:			else
+        -:  117:			{
+        1:  118:				printf("\nAvailable balance is: %7.2lf\n",ptr->balance);
+call    0 returned 1
+        -:  119:				while(1)
+        -:  120:				{
+        1:  121:					printf("\nEnter Amount to withdraw:\n ");
+call    0 returned 1
+        1:  122:					scanf("%lf",&amount);
+call    0 returned 1
+        1:  123:					b_amount=ptr->balance-amount;
+        -:  124:
+        -:  125:
+       1*:  126:					if((strcmp(ptr->account_type,"SB")==0 && b_amount <5000) || (strcmp(ptr->account_type,"CA")==0 && b_amount < 10000)) //checks if account typr is SA then amount should be greater than 5000 and if account type is CA then amount should be greater than 10000.
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+branch  6 never executed
+branch  7 never executed
+        -:  127:					{
+    #####:  128:						printf("\nCannot Withdraw amount....Low Balance!!\n");
+call    0 never executed
+    #####:  129:						break;
+        -:  130:					}
+       1*:  131:					else if((strcmp(ptr->account_type,"SA")==0 && amount >50000) || ((strcmp(ptr->account_type,"CA")==0) && amount > 100000)) //check if account type is SA then amount should be less than 50000 and if account type is CA then amount should be less than 100000.
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+branch  2 never executed
+branch  3 never executed
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+branch  6 never executed
+branch  7 never executed
+        -:  132:					{
+    #####:  133:						printf("\nAmount cannot be greater than 50000 for Savings Account and 100000 for Current Account\n");
+call    0 never executed
+    #####:  134:						continue;
+        -:  135:					}
+        -:  136:					else
+        -:  137:					{
+        1:  138:						ptr->balance = ptr->balance-amount; //Storing transaction in pointer
+        1:  139:						printf("\nCurrent Balance: %7.2lf\n",ptr->balance);
+call    0 returned 1
+        1:  140:						printf("\nRs. %lf Withdrawn\n",amount);
+call    0 returned 1
+        1:  141:						break;
+        -:  142:					}
+        -:  143:				}
+        -:  144:
+        -:  145:			}
+        -:  146:		}
+        1:  147:		if(choice==2)//Deposit Option
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+        -:  148:		{
+    #####:  149:			for(ptr=start;(ptr)&&(strcmp(ptr->customer_id,m_customer_id)!=0);ptr=ptr->next);
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+        -:  150:
+    #####:  151:				if(ptr==NULL) //checks if customer id is valid if not then it will print customer id not found
+branch  0 never executed
+branch  1 never executed
+        -:  152:				{
+    #####:  153:					printf("\n%s Customer id not found\n",m_customer_id);
+call    0 never executed
+        -:  154:
+    #####:  155:					return 0;
+        -:  156:				}
+        -:  157:				else
+        -:  158:				{
+        -:  159:					while(1)
+        -:  160:
+        -:  161:					{
+    #####:  162:						printf("\nEnter Amount to deposit:\n ");
+call    0 never executed
+    #####:  163:						scanf("%lf",&amount);
+call    0 never executed
+    #####:  164:						if((strcmp(ptr->account_type,"SA")==0 && amount >50000) || ((strcmp(ptr->account_type,"CA")==0) && amount > 100000))//checks the condition if account type is SA then amount should be less than 50000 and if account type is CA then amount should be less than 100000
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+branch  6 never executed
+branch  7 never executed
+        -:  165:						{
+    #####:  166:							printf("\nAmount cannot be greater than 50000 for Savings Account and 100000 for Current Account\n");
+call    0 never executed
+    #####:  167:							continue;
+        -:  168:						}
+        -:  169:						else
+        -:  170:						{
+    #####:  171:							ptr->balance = ptr->balance+amount;//storing transaction in pointer
+    #####:  172:							printf("\nCurrent Balance: %7.2lf\n",ptr->balance);
+call    0 never executed
+    #####:  173:							printf("\nRs. %lf Deposited\n",amount);
+call    0 never executed
+    #####:  174:							break;
+        -:  175:						}
+        -:  176:
+        -:  177:
+        -:  178:					}
+        -:  179:				}
+        -:  180:			}
+        -:  181:
+        -:  182:	}
+        -:  183:	else
+        -:  184:	{
+    #####:  185:		return 0;
+        -:  186:	}
+        1:  187:}
+        -:  188:
+function doTransfer called 0 returned 0% blocks executed 0%
+    #####:  189:void *doTransfer()// Transfer money from one account to another account
+        -:  190:{
+        -:  191:	char s_account[20];
+        -:  192:	char d_account[20];
+        -:  193:	double amt;
+        -:  194:	int token,auto_token;
+        -:  195:	time_t t1;
+    #####:  196:	transact *new1=(transact *)malloc(sizeof(transact));//Dynamic memory allocation for transaction
+    #####:  197:	double amount=0,after_balance=0;
+    #####:  198:	int Banker_Pass=0;
+    #####:  199:	Banker_Pass=checkpassword(); //storing the password
+call    0 never executed
+    #####:  200:	if(Banker_Pass==1)//checking the password and if its wroong it wiil print invalid password
+branch  0 never executed
+branch  1 never executed
+        -:  201:	{
+    #####:  202:		printf("\nINVALID PASSWORD!!!\n");
+call    0 never executed
+    #####:  203:		return 0;
+        -:  204:	}
+        -:  205:	else
+        -:  206:	{
+        -:  207:
+    #####:  208:		printf("\n-------Transfor Money-------\n");
+call    0 never executed
+        -:  209:
+        -:  210:
+    #####:  211:		printf("\nSource Account Customer ID-\n");
+call    0 never executed
+    #####:  212:		scanf("%s",s_account);
+call    0 never executed
+    #####:  213:		int flag=0;
+    #####:  214:		for(ptr=start;(ptr);ptr=ptr->next)
+branch  0 never executed
+branch  1 never executed
+        -:  215:		{
+    #####:  216:			if(strcmp(ptr->customer_id,s_account)==0)
+branch  0 never executed
+branch  1 never executed
+        -:  217:			{
+        -:  218:
+    #####:  219:				flag=1;
+    #####:  220:				break;
+        -:  221:
+        -:  222:			}
+        -:  223:
+        -:  224:		}
+    #####:  225:		if(flag==0)
+branch  0 never executed
+branch  1 never executed
+        -:  226:		{
+    #####:  227:		printf("\nSource Account not Found!!!\n");
+call    0 never executed
+    #####:  228:		return 0;
+        -:  229:		}
+    #####:  230:		printf("\nDestination Account Number/Id\n");
+call    0 never executed
+    #####:  231:		scanf("%s",d_account);
+call    0 never executed
+    #####:  232:		flag=0;
+    #####:  233:		for(ptr=start;(ptr);ptr=ptr->next)
+branch  0 never executed
+branch  1 never executed
+        -:  234:		{
+    #####:  235:			if(strcmp(ptr->customer_id,d_account)==0)
+branch  0 never executed
+branch  1 never executed
+        -:  236:			{
+        -:  237:
+    #####:  238:				flag=1;
+    #####:  239:				break;
+        -:  240:			}
+        -:  241:		}
+    #####:  242:			if(flag==0){
+branch  0 never executed
+branch  1 never executed
+    #####:  243:				printf("\n Destination  account not found!!!\n");
+call    0 never executed
+    #####:  244:				return 0;
+        -:  245:			}
+    #####:  246:		printf("\nEnter Amount To Transfer\n");
+call    0 never executed
+    #####:  247:		scanf("%lf",&amt);
+call    0 never executed
+    #####:  248:		srand((unsigned) time(&t1)); //generates random unique token no
+call    0 never executed
+call    1 never executed
+    #####:  249:		auto_token=rand() % 50;
+call    0 never executed
+    #####:  250:                pthread_mutex_lock(&lock); //lock mutex object
+call    0 never executed
+        -:  251:
+    #####:  252:		printf("\n YOUR TOKEN FOR CURRENT TRANSACTION IS %d\n",auto_token);
+call    0 never executed
+    #####:  253:                pthread_mutex_unlock(&lock); //release mutex object
+call    0 never executed
+    #####:  254:		printf("\n PLEASE CONFIRM YOUR TOKEN\n");
+call    0 never executed
+    #####:  255:		scanf("%d",&token);
+call    0 never executed
+    #####:  256:		if(token==auto_token) //checks the token number
+branch  0 never executed
+branch  1 never executed
+        -:  257:		{
+    #####:  258:			for(ptr=start;(ptr);ptr=ptr->next)
+branch  0 never executed
+branch  1 never executed
+        -:  259:			{
+    #####:  260:				if((strcmp(ptr->customer_id,s_account)==0))
+branch  0 never executed
+branch  1 never executed
+        -:  261:				{
+    #####:  262:					after_balance=ptr->balance-amt;
+        -:  263:					while(1)
+        -:  264:					{
+    #####:  265:						if((strcmp(ptr->account_type,"SB")==0 && after_balance<5000) || (strcmp(ptr->account_type,"CA")==0 && after_balance < 10000)) //checks if account type is SA then amount should be greater than 5000 and if account type is CA then amount should be greater than 10000
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+branch  6 never executed
+branch  7 never executed
+        -:  266:						{
+    #####:  267:							printf("Can't Transfer. You are at low balance\n");
+call    0 never executed
+    #####:  268:							return 0;
+        -:  269:						}
+        -:  270:
+    #####:  271:						if((strcmp(ptr->account_type,"SB")==0 && amt >50000) || (strcmp(ptr->account_type,"CA")==0 && amt > 100000)) //checks if account type is SA then amount should be less than 50000 and if account type is CA then amount should be less than 100000
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+branch  6 never executed
+branch  7 never executed
+        -:  272:						{
+    #####:  273:							printf("Amount cannot be greater than 50000 for Savings Account and 100000 for Current Account");
+call    0 never executed
+    #####:  274:							continue;
+        -:  275:						}
+        -:  276:						else
+        -:  277:						{
+    #####:  278:							printf("After deduction %7.2lf\n",after_balance);
+call    0 never executed
+    #####:  279:							ptr->balance = ptr->balance-amt;//storing the amount in pointer
+    #####:  280:							printf("Rs. %lf Debited\n",amt);
+call    0 never executed
+    #####:  281:							printf("Current Balance: %7.2lf\n",ptr->balance);
+call    0 never executed
+    #####:  282:							break;
+        -:  283:						}
+        -:  284:					}
+        -:  285:
+        -:  286:				}
+        -:  287:
+    #####:  288:				if(strcmp(ptr->customer_id,d_account)==0)
+branch  0 never executed
+branch  1 never executed
+        -:  289:				{
+    #####:  290:					ptr->balance=ptr->balance+amt;//storing amount in pointer
+    #####:  291:					printf("Rs. %7.2lf credited to account\n",amt);
+call    0 never executed
+    #####:  292:					printf("Your balance is Rs. %7.2lf\n",ptr->balance);
+call    0 never executed
+        -:  293:					//return 0;
+        -:  294:
+        -:  295:				}
+        -:  296:			}
+        -:  297:		}
+        -:  298:		else
+        -:  299:		{
+    #####:  300:			printf("\n INVALID TOKEN!!!!!\n");
+call    0 never executed
+    #####:  301:			return 0;
+        -:  302:		}
+    #####:  303:		strcpy(new1->s_account,s_account);//storing local variable of source account  in structure variable to create linked list
+    #####:  304:		strcpy(new1->d_account,d_account);//storing local variable of destination account in structure variable to create linked list
+    #####:  305:		new1->amount=amt;
+    #####:  306:		if(!start1)//empty list
+branch  0 never executed
+branch  1 never executed
+        -:  307:		{
+    #####:  308:			start1=new1;
+    #####:  309:			last1=new1;
+    #####:  310:			new1->next=NULL;
+        -:  311:
+        -:  312:
+        -:  313:		}
+        -:  314:		else
+        -:  315:		{
+    #####:  316:			last1->next=new1;
+    #####:  317:			last1=new1;
+    #####:  318:			new1->next=NULL;
+        -:  319:
+        -:  320:		}
+    #####:  321:		printf("\n");
+call    0 never executed
+        -:  322:	}
+    #####:  323:}
+        -:  324:

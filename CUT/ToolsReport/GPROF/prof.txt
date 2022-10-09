@@ -1,0 +1,77 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+ no time accumulated
+
+  %   cumulative   self              self     total
+ time   seconds   seconds    calls  Ts/call  Ts/call  name
+  0.00      0.00     0.00       10     0.00     0.00  password
+  0.00      0.00     0.00        3     0.00     0.00  checkpassword
+  0.00      0.00     0.00        3     0.00     0.00  getCustomerReport
+  0.00      0.00     0.00        2     0.00     0.00  bankerCorner
+  0.00      0.00     0.00        2     0.00     0.00  createAccount
+  0.00      0.00     0.00        2     0.00     0.00  customerCorner
+  0.00      0.00     0.00        2     0.00     0.00  getpassword
+  0.00      0.00     0.00        1     0.00     0.00  customer_list_to_file
+  0.00      0.00     0.00        1     0.00     0.00  deleteCustomer
+  0.00      0.00     0.00        1     0.00     0.00  editCustomer
+  0.00      0.00     0.00        1     0.00     0.00  viewBalance
+
+
+                        Call graph
+
+
+granularity: each sample hit covers 4 byte(s) no time propagated
+
+index % time    self  children    called     name
+                0.00    0.00       4/10          getpassword [7]
+                0.00    0.00       6/10          checkpassword [2]
+[1]      0.0    0.00    0.00      10         password [1]
+-----------------------------------------------
+                0.00    0.00       1/3           doTransfer [44]
+                0.00    0.00       2/3           main [60]
+[2]      0.0    0.00    0.00       3         checkpassword [2]
+                0.00    0.00       6/10          password [1]
+-----------------------------------------------
+                0.00    0.00       3/3           bankerCorner [4]
+[3]      0.0    0.00    0.00       3         getCustomerReport [3]
+-----------------------------------------------
+                0.00    0.00       2/2           main [60]
+[4]      0.0    0.00    0.00       2         bankerCorner [4]
+                0.00    0.00       3/3           getCustomerReport [3]
+                0.00    0.00       1/1           editCustomer [10]
+                0.00    0.00       1/1           deleteCustomer [9]
+-----------------------------------------------
+                0.00    0.00       2/2           customerCorner [6]
+[5]      0.0    0.00    0.00       2         createAccount [5]
+                0.00    0.00       2/2           getpassword [7]
+-----------------------------------------------
+                0.00    0.00       2/2           main [60]
+[6]      0.0    0.00    0.00       2         customerCorner [6]
+                0.00    0.00       2/2           createAccount [5]
+                0.00    0.00       1/1           viewBalance [11]
+-----------------------------------------------
+                0.00    0.00       2/2           createAccount [5]
+[7]      0.0    0.00    0.00       2         getpassword [7]
+                0.00    0.00       4/10          password [1]
+-----------------------------------------------
+                0.00    0.00       1/1           main [60]
+[8]      0.0    0.00    0.00       1         customer_list_to_file [8]
+-----------------------------------------------
+                0.00    0.00       1/1           bankerCorner [4]
+[9]      0.0    0.00    0.00       1         deleteCustomer [9]
+-----------------------------------------------
+                0.00    0.00       1/1           bankerCorner [4]
+[10]     0.0    0.00    0.00       1         editCustomer [10]
+-----------------------------------------------
+                0.00    0.00       1/1           customerCorner [6]
+[11]     0.0    0.00    0.00       1         viewBalance [11]
+-----------------------------------------------
+
+
+Index by function name
+
+   [4] bankerCorner            [8] customer_list_to_file   [7] getpassword
+   [2] checkpassword           [9] deleteCustomer          [1] password
+   [5] createAccount          [10] editCustomer           [11] viewBalance
+   [6] customerCorner          [3] getCustomerReport

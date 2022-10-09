@@ -1,0 +1,604 @@
+        -:    0:Source:Functions.c
+        -:    0:Graph:main.gcno
+        -:    0:Data:main.gcda
+        -:    0:Runs:1
+        -:    1:#include <stdio.h> //Include required header files
+        -:    2:#include<stdlib.h>
+        -:    3:#include<string.h>
+        -:    4:#include<ctype.h>
+        -:    5:#include<pthread.h>
+        -:    6:#include<time.h>
+        -:    7:#include "Utility.h"
+        -:    8:#include "Function.h"
+        -:    9:
+function createAccount called 1 returned 100% blocks executed 58%
+        1:   10:int createAccount() //This function is to create an account
+        -:   11:
+        -:   12:{
+        -:   13:	char name[50];
+        -:   14:	char aadhar_no[13];
+        -:   15:	char customer_id[20];
+        1:   16:	int len=0;
+        -:   17:	char password[10];
+        -:   18:	char account_type[5];
+        -:   19:	double amount;
+        1:   20:	new_acc = (customer *) malloc(sizeof(customer)); //Memory allocation for customer structure
+        1:   21:	printf("\n\n Create Your Account\n");
+call    0 returned 1
+        -:   22:	while(1)
+    #####:   23:	{
+        1:   24:		printf("\nEnter Your Name:\n");
+call    0 returned 1
+        1:   25:		fflush(stdin);
+call    0 returned 1
+call    1 returned 1
+        1:   26:		scanf("%s",name);
+call    0 returned 1
+        -:   27:		int len;
+        1:   28:		int flag=0;
+        7:   29:		for(int i=0;i<strlen(name);i++)
+branch  0 taken 6
+branch  1 taken 1 (fallthrough)
+        -:   30:		{
+        6:   31:			if(!isalpha(name[i])) //check() function is used to check whether the name is in number or alphabet, if number then it return 0
+call    0 returned 6
+branch  1 taken 0 (fallthrough)
+branch  2 taken 6
+        -:   32:			{
+    #####:   33:				flag=1;
+    #####:   34:				break;
+        -:   35:			}
+        -:   36:		}
+       1*:   37:		if(flag==1)
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+        -:   38:		{
+    #####:   39:			printf("Invalid name!! Name should contain only alphabets\n");
+call    0 never executed
+    #####:   40:			continue;
+        -:   41:		}
+        1:   42:		len=strlen(name);
+       1*:   43:		if(len<3||len>20) //Checks the length of the name, as it should not be less than 3 and greater than 20
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+branch  2 taken 0 (fallthrough)
+branch  3 taken 1
+        -:   44:		{
+    #####:   45:			printf("Invalid Length!! Length should not exceed 20 charecters\n");
+call    0 never executed
+    #####:   46:			continue;
+        -:   47:		}
+        -:   48:		else
+        -:   49:		{
+        -:   50:			break;
+        -:   51:		}
+        -:   52:	}
+        -:   53:		long int aadhar;
+        1:   54:		int flag=0;
+        -:   55:		while(1)
+        -:   56:		{
+        1:   57:			printf("\nEnter aadhar no:\n");
+call    0 returned 1
+        1:   58:			scanf("%ld",&aadhar);
+call    0 returned 1
+       1*:   59:			for(ptr=start;(ptr);ptr=ptr->next)
+branch  0 taken 0
+branch  1 taken 1 (fallthrough)
+        -:   60:			{
+    #####:   61:				if(ptr->aadhar_no==aadhar)
+branch  0 never executed
+branch  1 never executed
+        -:   62:				{
+    #####:   63:					flag=1;
+    #####:   64:					break;
+        -:   65:				}
+        -:   66:			}
+        1:   67:			if(flag==1)
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+        -:   68:			{
+    #####:   69:				printf("Already exist!!");
+call    0 never executed
+    #####:   70:				return 0;
+        -:   71:			}
+       1*:   72:			if(aadhar<100000000000 || aadhar>999999999999) //Checking the length of Aadhar number as it should be of 12 digits only else it will print invalid message
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+branch  2 taken 0 (fallthrough)
+branch  3 taken 1
+        -:   73:			{
+    #####:   74:				printf("\nInvalid Length!! Length should only of 12 digits.\n");
+call    0 never executed
+    #####:   75:				continue;
+        -:   76:			}
+        -:   77:
+        -:   78:
+        -:   79:			else{
+        -:   80:				break;
+        -:   81:			}
+        -:   82:		}
+        1:   83:			sprintf(aadhar_no,"%ld",aadhar); //stores integer in string
+        -:   84:
+        -:   85://	printf("\nEnter your password: \n");
+        -:   86://	scanf("%s",password);
+        1:   87:        char *pr=getpassword(); //storing password in pointer
+call    0 returned 1
+        -:   88:
+        -:   89:	while(1)
+        -:   90:	{
+        -:   91:		//Taking input of account type
+        1:   92:		printf("\nEnter your account type:\n");
+call    0 returned 1
+        1:   93:	        scanf("%s",account_type);
+call    0 returned 1
+       1*:   94:		if((strcmp(account_type,"SB")==0) ||(strcmp(account_type,"CA")==0)) //To check account type. It should be SA or CA.
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+branch  2 never executed
+branch  3 never executed
+        -:   95:		{
+        -:   96:
+        -:   97:			break;
+        -:   98:		}
+        -:   99:		else{
+    #####:  100:			printf("\nInvalid account type!!\n");
+call    0 never executed
+    #####:  101:		     continue;
+        -:  102:		}
+        -:  103:	}
+        -:  104:
+        -:  105:	while(1)
+        -:  106:	{
+        -:  107:		//Taking the input of amount
+        1:  108:        	printf("\nEnter your amount:\n");
+call    0 returned 1
+        1:  109:	        scanf("%lf",&amount);
+call    0 returned 1
+       1*:  110:			if((strcmp(account_type,"SB")==0 && amount<5000) || (strcmp(account_type,"CA")==0 && amount < 10000)) //Checking if Account type is SA and then amount should be greater than 5000 and if account type is CA then amount should be greater than 10000
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+branch  6 never executed
+branch  7 never executed
+        -:  111:			{
+    #####:  112:				printf("\nMinimum amount should not be less than 5000 SA and less than 10000 for CA\n");
+call    0 never executed
+    #####:  113:				continue;
+        -:  114:			}
+        -:  115:			else
+        -:  116:			{
+        -:  117:				break;
+        -:  118:			}
+        -:  119:	}
+        -:  120:
+        1:  121:       	strcpy(customer_id,account_type); //Copying account type in customer id
+        1:  122:        strcat(customer_id,aadhar_no); //Concatenate customer id and addhar no
+        -:  123:
+        1:  124:	strcpy(new_acc->name,name); // Storing local variable of name in pointer of customer structure
+        1:  125:	strcpy(new_acc->customer_id,customer_id); //Storing  local customer_id in pointer of customer structure
+        1:  126:	new_acc->aadhar_no=aadhar; //Typecasting and storing it in pointer
+        1:  127:	strcpy(new_acc->password,pr); //storing password in pointer of customer structure
+        1:  128:	strcpy(new_acc->account_type,account_type); //Storing accont type in pointer of customer structure
+        1:  129:	new_acc->balance=amount; //storing amount in pointer
+        -:  130:
+        1:  131:	printf("\nYour account is created successfully!!!!\n");
+call    0 returned 1
+        1:  132:      customer_id[strlen(customer_id)]='\0';
+        1:  133:        printf("\nThis is your customer id: %s\n",customer_id);
+call    0 returned 1
+        1:  134:	if(!start)
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        -:  135:	{
+        1:  136:		start=new_acc;
+        1:  137:		new_acc->next=NULL;
+        -:  138:	}
+        -:  139:	/*else if(strcmp(new_acc->customer_id, start->customer_id)<0)
+        -:  140:	{
+        -:  141:		new_acc->next=start;
+        -:  142:		start=new_acc;
+        -:  143:	}*/
+        -:  144:	else
+        -:  145:	{
+    #####:  146:		for(ptr=start;(ptr) &&(strcmp( ptr->customer_id, new_acc->customer_id)<0);prev= ptr ,ptr=ptr->next);
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:  147:		prev->next=new_acc;
+    #####:  148:		new_acc->next=ptr;
+        -:  149:	}
+        1:  150:	printf("\n");
+call    0 returned 1
+        1:  151:}
+        -:  152:
+function viewBalance called 1 returned 100% blocks executed 62%
+        1:  153:int viewBalance() //View balance of customer by accepting customer id
+        -:  154:{
+        1:  155:	if(!start) //checking if list is empty
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+        -:  156:	{
+    #####:  157:		printf("\nThere are no records in system\n");
+call    0 never executed
+    #####:  158:		return(1);
+        -:  159:	}
+        -:  160:	char m_customer_id[20];
+        1:  161:	printf("\nEnter Customer id:\n");
+call    0 returned 1
+        1:  162:	scanf("%s",m_customer_id);
+call    0 returned 1
+       1*:  163:	for(ptr=start;(ptr) &&(strcmp( ptr->customer_id,m_customer_id)<0);ptr=ptr->next);
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+branch  2 taken 0
+branch  3 taken 1 (fallthrough)
+        1:  164:	if(strcmp(ptr->customer_id,m_customer_id)!=0) //if pointer id NULL then customer is not found
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+        -:  165:	{
+    #####:  166:		printf("\n %s Customer id not found\n",m_customer_id);
+call    0 never executed
+    #####:  167:		return(1);
+        -:  168:	}
+        1:  169:	printf("\nBalance is %.2lf\n",ptr->balance);
+call    0 returned 1
+        -:  170:
+        1:  171:}
+        -:  172:
+function customer_file_to_list called 0 returned 0% blocks executed 0%
+    #####:  173:int customer_file_to_list() //Inserting recrods from file to list
+        -:  174:{
+        -:  175:	FILE *fp;                                    //File  Pointer
+    #####:  176:	if((fp=fopen("Customer_File","rb")) == NULL) //Opening a binary file for reading
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  177:	{
+    #####:  178:		return (1);
+        -:  179:	}
+    #####:  180:	new_acc = (customer *)calloc(1,sizeof(customer));        //Allocating Dynamic memory
+    #####:  181:	fread(new_acc,sizeof(customer),1,fp);                //reading file
+call    0 never executed
+    #####:  182:	while(!feof(fp))
+branch  0 never executed
+branch  1 never executed
+        -:  183:	{
+        -:  184:		//after reading data from file , inserting into the linked list
+    #####:  185:		if(!start)
+branch  0 never executed
+branch  1 never executed
+        -:  186:		{
+    #####:  187:			start=last=new_acc;
+    #####:  188:			new_acc->next=NULL;
+        -:  189:		}
+        -:  190:		else
+        -:  191:		{
+    #####:  192:			last->next=new_acc;
+    #####:  193:			last=new_acc;
+    #####:  194:			new_acc->next=NULL;
+        -:  195:		}
+    #####:  196:		new_acc=(customer *) calloc(1,sizeof(customer)); //Dynamically allocating memory
+    #####:  197:		fread(new_acc,sizeof(customer),1,fp);         //reading file
+call    0 never executed
+        -:  198:	}
+    #####:  199:}
+        -:  200:
+function customer_list_to_file called 0 returned 0% blocks executed 0%
+    #####:  201:int customer_list_to_file() //For inserting records in customer file from list
+        -:  202:{
+        -:  203:	FILE *fp;                                    //File pointer
+    #####:  204:	fp=fopen("Customer_File","wb");              //opening the binary file in write mode
+call    0 never executed
+    #####:  205:	for(ptr=start; (ptr);ptr=ptr->next)
+branch  0 never executed
+branch  1 never executed
+        -:  206:	{
+    #####:  207:		fwrite(ptr,sizeof(customer),1,fp);       //Writing in file
+call    0 never executed
+        -:  208:	}
+    #####:  209:	fclose(fp);                                 //closing the file
+call    0 never executed
+    #####:  210:}
+        -:  211:
+function getCustomerReport called 1 returned 100% blocks executed 82%
+        1:  212:int getCustomerReport() //View customer report
+        -:  213:{
+        -:  214:	//after reading data from file ,inserting into the linked list
+        1:  215:	if(!start)
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+        -:  216:	{
+    #####:  217:		printf("\nEmpty File...No records in file\n");
+call    0 never executed
+    #####:  218:		return(1);
+        -:  219:	}
+        1:  220:	printf("\n--Customer Report--\n");
+call    0 returned 1
+        1:  221:	printf("\n CUSTOMER_ID    AADHAR_NO      NAME    PASSWORD    ACCOUNT_TYPE     BALANCE\n\n");
+call    0 returned 1
+        2:  222:	for(ptr=start;ptr;ptr=ptr->next)
+branch  0 taken 1
+branch  1 taken 1 (fallthrough)
+        -:  223:	{
+        1:  224:		printf("\n %s        %ld        %s         %s        %s         %8.21f \n",ptr->customer_id,ptr->aadhar_no,ptr->name,ptr->password,ptr->account_type,ptr->balance);
+call    0 returned 1
+        -:  225:}
+        -:  226:
+        1:  227:}
+        -:  228:
+function editCustomer called 1 returned 100% blocks executed 62%
+        1:  229:int editCustomer() //Edit the details of customer details with all validations
+        -:  230:{
+        -:  231:	char  m_customer_id[20];
+        1:  232:	int flag=0;
+        -:  233:	char name[30];
+        -:  234:	char  m_account_type[10];
+        -:  235:	char m_aadhar_no[15];
+        -:  236:
+        1:  237:	printf("\nEnter the customer id\n");
+call    0 returned 1
+        1:  238:	scanf("%s",m_customer_id);
+call    0 returned 1
+       1*:  239:	for(ptr=start; (ptr) &&(strcmp(ptr->customer_id,m_customer_id)!=0);ptr=ptr->next);
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+branch  2 taken 0
+branch  3 taken 1 (fallthrough)
+        -:  240:
+        -:  241:
+        1:  242:	if(!ptr)
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+        -:  243:	{
+    #####:  244:		printf("\n%d Customer id not found\n",m_customer_id);
+call    0 never executed
+    #####:  245:		return(1);
+        -:  246:	}
+        1:  247:	printf("\nThe old customer name %s , account type %s and balance of customer id %s is %7.21f\n",ptr->name,ptr->account_type,ptr->customer_id,ptr->balance);
+call    0 returned 1
+        -:  248:
+        -:  249:	while(1)
+        -:  250:
+    #####:  251:	{
+        1:  252:		sprintf(m_aadhar_no,"%ld",ptr->aadhar_no);
+        -:  253:		//Taking input of customer name
+        1:  254:		printf("\nEnter Your Name:\n");
+call    0 returned 1
+        1:  255:		fflush(stdin);
+call    0 returned 1
+call    1 returned 1
+        1:  256:		scanf("%s",name);
+call    0 returned 1
+        -:  257:		int len;
+        1:  258:		int flag=0;
+        7:  259:		for(int i=0;name[i]!='\0';i++)
+branch  0 taken 6
+branch  1 taken 1 (fallthrough)
+        -:  260:		{
+        6:  261:			if(!isalpha(name[i])) //isalpha() function is used to check if user gives numbers in name section then it will not accept the name
+call    0 returned 6
+branch  1 taken 0 (fallthrough)
+branch  2 taken 6
+        -:  262:			{
+    #####:  263:				flag=1;
+    #####:  264:				break;
+        -:  265:			}
+        -:  266:		}
+       1*:  267:		if(flag==1)
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+        -:  268:		{
+    #####:  269:			printf("Invalid name.Name should contain only alphabets\n");
+call    0 never executed
+    #####:  270:			continue;
+        -:  271:		}
+        1:  272:		len=strlen(name);
+       1*:  273:		if(len<3||len>20) //Checking that length of the name should be less than 20 and greater than 3
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+branch  2 taken 0 (fallthrough)
+branch  3 taken 1
+        -:  274:		{
+    #####:  275:			printf("Invalid Length.Length should not exceed 20 charecters\n");
+call    0 never executed
+    #####:  276:			continue;
+        -:  277:		}
+        -:  278:		else
+        -:  279:		{
+        -:  280:			break;
+        -:  281:		}
+        -:  282:	}
+        -:  283:	while(1) //edit account type
+        -:  284:	{
+        1:  285:		printf("\nEnter the new account type\n");
+call    0 returned 1
+        1:  286:		scanf("%s",&m_account_type);
+call    0 returned 1
+       1*:  287:		if((strcmp(m_account_type,"SB")==0) || (strcmp(m_account_type,"CA")==0))
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0
+        -:  288:		{
+        -:  289:
+        1:  290:			if(strcmp(m_account_type,"CA")==0)
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        -:  291:			{
+       1*:  292:				if(ptr->balance<10000)
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+        -:  293:				{
+    #####:  294:					printf("\nMinimum account balance of CA should be more than Rs10000\n");
+call    0 never executed
+    #####:  295:					continue;
+        -:  296:				}
+        -:  297:				else
+        -:  298:				{
+        1:  299:					strcpy(ptr->account_type,m_account_type);
+        1:  300:					strcpy(ptr->customer_id,m_account_type);
+        1:  301:					strcat(ptr->customer_id,m_aadhar_no);
+        1:  302:					printf("New account type : %s",ptr->customer_id);
+call    0 returned 1
+        -:  303:
+        1:  304:					break;
+        -:  305:				}
+        -:  306:			}
+    #####:  307:			else if(strcmp(m_account_type,"SA")==0)
+branch  0 never executed
+branch  1 never executed
+        -:  308:			{
+        -:  309:
+    #####:  310:				strcpy(ptr->account_type,m_account_type);
+    #####:  311:				strcpy(ptr->customer_id,m_account_type);
+    #####:  312:				strcat(ptr->customer_id,m_aadhar_no);
+    #####:  313:				printf("\nNew account type : %s",ptr->customer_id);
+call    0 never executed
+    #####:  314:				break;
+        -:  315:			}
+        -:  316:		}
+        -:  317:		else
+        -:  318:		{
+    #####:  319:			printf("\nInvalid account type\n");
+call    0 never executed
+    #####:  320:			continue;
+        -:  321:		}
+        -:  322:	}
+        1:  323:	strcpy(ptr->name,name);
+        1:  324:}
+        -:  325:
+function deleteCustomer called 1 returned 100% blocks executed 37%
+        1:  326:int deleteCustomer() //Delete customer details
+        -:  327:{
+        1:  328:	if(!start)
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+        -:  329:	{
+    #####:  330:		printf("\nEmpty Records\n");
+call    0 never executed
+    #####:  331:		return(1);
+        -:  332:	}
+        -:  333:	char  m_customer_id[20];
+        1:  334:	printf("\nEnter the Customer id\n");
+call    0 returned 1
+        1:  335:	scanf("%s",m_customer_id);
+call    0 returned 1
+        1:  336:	if(strcmp(m_customer_id,start->customer_id)==0)
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        -:  337:	{
+        1:  338:		ptr=start;
+        1:  339:		start=ptr->next;
+        1:  340:		free(ptr);
+        -:  341:	}
+        -:  342:	else
+        -:  343:	{
+    #####:  344:		for(ptr=start;(ptr) &&(strcmp (ptr->customer_id,m_customer_id)!=0);prev=ptr,ptr=ptr->next);
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:  345:		if(!ptr)
+branch  0 never executed
+branch  1 never executed
+        -:  346:		{
+    #####:  347:			printf("\n%s Customer id not found\n",m_customer_id);
+call    0 never executed
+    #####:  348:			return(1);
+        -:  349:		}
+    #####:  350:		printf("\nThe record of customer id %s deleted succesfully\n\n",ptr->customer_id);
+call    0 never executed
+    #####:  351:		prev->next=ptr->next;
+    #####:  352:		free(ptr);
+        -:  353:	}
+        1:  354:}
+        -:  355:
+function banker_file_to_list called 0 returned 0% blocks executed 0%
+    #####:  356:int banker_file_to_list() //For insering records in list from banker file
+        -:  357:{
+        -:  358:	transact *last;         //last pointer
+        -:  359:	FILE *fp;
+    #####:  360:	if((fp=fopen("Transaction_File","rb"))==NULL)  //Opening the binary file in read mode
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  361:	{
+    #####:  362:		printf("\nEmpty File...No records in file\n");
+call    0 never executed
+    #####:  363:		return 1;
+        -:  364:	}
+    #####:  365:	new1=(transact *)calloc(1,sizeof(transact)); //Dynamically allocating memory for new1 for bankers
+    #####:  366:	fread(new1,sizeof(transact),1,fp);     //reading file
+call    0 never executed
+    #####:  367:	while(!feof(fp))
+branch  0 never executed
+branch  1 never executed
+        -:  368:	{
+        -:  369:		//after reading data from file inserting into linked list
+    #####:  370:		if(!start1)
+branch  0 never executed
+branch  1 never executed
+        -:  371:		{
+    #####:  372:			start1=last=new1;
+    #####:  373:			new1->next=NULL;
+        -:  374:		}
+        -:  375:		else
+        -:  376:		{
+    #####:  377:			last->next=new1;
+    #####:  378:			last=new1;
+    #####:  379:			new1->next=NULL;
+        -:  380:		}
+    #####:  381:		new1=(transact *)calloc(1,sizeof(transact));
+    #####:  382:		fread(new1,sizeof(transact),1,fp);
+call    0 never executed
+        -:  383:	}
+    #####:  384:}
+        -:  385:
+function banker_list_to_file called 0 returned 0% blocks executed 0%
+    #####:  386:int banker_list_to_file()
+        -:  387:{
+        -:  388:	FILE *fp;                                  //File pointer
+    #####:  389:	fp=fopen("Transaction_File","wb");         //opening the binary file in write mode
+call    0 never executed
+    #####:  390:	for(ptr1=start1;(ptr1);ptr1=ptr1->next)    //appending data at the end
+branch  0 never executed
+branch  1 never executed
+        -:  391:	{
+    #####:  392:		fwrite(ptr1,sizeof(transact),1,fp);      //writing in file banker
+call    0 never executed
+        -:  393:	}
+    #####:  394:	fclose(fp);  //closing the file
+call    0 never executed
+    #####:  395:}
+        -:  396:
+function getTransactionReport called 0 returned 0% blocks executed 0%
+    #####:  397:int getTransactionReport() //display transaction report*
+        -:  398:{
+        -:  399:
+    #####:  400:	if(!start1)
+branch  0 never executed
+branch  1 never executed
+        -:  401:	{
+    #####:  402:		printf("Empty List\n");
+call    0 never executed
+    #####:  403:		return(1);
+        -:  404:	}
+    #####:  405:	printf("\n--Transaction Report--\n");
+call    0 never executed
+    #####:  406:	printf("\n SOURCE   DESTINATION    AMOUNT\n\n");
+call    0 never executed
+    #####:  407:	for(ptr1=start1;ptr1;ptr1=ptr1->next)
+branch  0 never executed
+branch  1 never executed
+        -:  408:	{
+        -:  409:
+    #####:  410:		printf("\n %s         %s           %7.21f \n",ptr1->s_account,ptr1->d_account,ptr1->amount);
+call    0 never executed
+        -:  411:	}
+        -:  412:
+    #####:  413:}
+        -:  414:
