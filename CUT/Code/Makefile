@@ -4,7 +4,7 @@ CC=gcc -c
 RM=rm *.o
 
 final:	main.o
-	$(CO) final $(OBJ) -lpthread
+	$(CO) final $(OBJ) -g -lpthread
 
 main.o:	SRC/main.c
 	$(CC) SRC/main.c
