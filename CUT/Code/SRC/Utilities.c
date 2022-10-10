@@ -13,10 +13,9 @@ int customerCorner()
 	{
 
 		//system("clear");
-
-printf("\n\n\t\t\t\tCustomer Corner");
-printf("\n\n\n\t\t\t\xB2\xB2\xB2\xB2\xB2\xB2\xB2 Welcome to Customer Facilities \xB2\xB2\xB2\xB2\xB2\xB2\xB2");
-printf("\n\n\t\t 1. Create Account\n\t\t 2. Do Transaction\n\t\t 3. View Balance\n\t\t 4. Back to Main Menu\n");
+		printf("\n\n\t\t\t\tCustomer Corner");
+		printf("\n\n\n\t\t\t\xB2\xB2\xB2\xB2\xB2\xB2\xB2 Welcome to Customer Facilities \xB2\xB2\xB2\xB2\xB2\xB2\xB2");
+		printf("\n\n\t\t 1. Create Account\n\t\t 2. Do Transaction\n\t\t 3. View Balance\n\t\t 4. Back to Main Menu\n");
 		printf("\n___________________\n\n");
 		printf("\n   Enter your choice:");
 		scanf("%d",&choice);
@@ -41,9 +40,9 @@ int bankerCorner()
 	while(choice!=6)
 	{
 	   // system("clear");
-printf("\n\n\t\t\t\tBanker's Corner");
-printf("\n\n\n\t\t\t\xB2\xB2\xB2\xB2\xB2\xB2\xB2 Welcome to Banker's Corner \xB2\xB2\xB2\xB2\xB2\xB2\xB2");
-printf("\n\n\t\t 1. Edit Customer details\n\t\t 2. Delete Customer Details\n\t\t 3. Do Transfer\n\t\t 4. Get Transaction report\n\t\t 5. Get Customer Report\n\t\t 6. Back to Main Menu.\n");
+		printf("\n\n\t\t\t\tBanker's Corner");
+		printf("\n\n\n\t\t\t\xB2\xB2\xB2\xB2\xB2\xB2\xB2 Welcome to Banker's Corner \xB2\xB2\xB2\xB2\xB2\xB2\xB2");
+		printf("\n\n\t\t 1. Edit Customer details\n\t\t 2. Delete Customer Details\n\t\t 3. Do Transfer\n\t\t 4. Get Transaction report\n\t\t 5. Get Customer Report\n\t\t 6. Back to Main Menu.\n");
 		printf("\n_________________________\n\n");
 		printf("\nEnter your Choice:\n");
 		scanf("%d",&choice);
@@ -192,6 +191,7 @@ void *doTransfer()// Transfer money from one account to another account
 	char d_account[20];
 	double amt;
 	int token,auto_token;
+	int transfer_flag=0;
 	time_t t1;
 	transact *new1=(transact *)malloc(sizeof(transact));//Dynamic memory allocation for transaction
 	double amount=0,after_balance=0;
@@ -239,10 +239,11 @@ void *doTransfer()// Transfer money from one account to another account
 				break;
 			}
 		}
-			if(flag==0){
-				printf("\n Destination  account not found!!!\n");
-				return 0;
-			}
+		if(flag==0)
+		{
+			printf("\n Destination account not found!!!\n");
+			return 0;
+		}
 		printf("\nEnter Amount To Transfer\n");
 		scanf("%lf",&amt);
 		srand((unsigned) time(&t1)); //generates random unique token no
@@ -260,40 +261,45 @@ void *doTransfer()// Transfer money from one account to another account
 				if((strcmp(ptr->customer_id,s_account)==0))
 				{
 					after_balance=ptr->balance-amt;
-					while(1)
+					if((strcmp(ptr->account_type,"SB")==0 && after_balance<5000) || (strcmp(ptr->account_type,"CA")==0 && after_balance < 10000)) //checks if account type is SB then amount should be greater than 5000 and if account type is CA then amount should be greater than 10000
 					{
-						if((strcmp(ptr->account_type,"SB")==0 && after_balance<5000) || (strcmp(ptr->account_type,"CA")==0 && after_balance < 10000)) //checks if account type is SA then amount should be greater than 5000 and if account type is CA then amount should be greater than 10000
-						{
-							printf("Can't Transfer. You are at low balance\n");
-							return 0;
-						}
-
-						if((strcmp(ptr->account_type,"SB")==0 && amt >50000) || (strcmp(ptr->account_type,"CA")==0 && amt > 100000)) //checks if account type is SA then amount should be less than 50000 and if account type is CA then amount should be less than 100000
-						{
-							printf("Amount cannot be greater than 50000 for Savings Account and 100000 for Current Account");
-							continue;
-						}
-						else
-						{
-							printf("After deduction %7.2lf\n",after_balance);
-							ptr->balance = ptr->balance-amt;//storing the amount in pointer
-							printf("Rs. %lf Debited from account %s\n",amt,ptr->customer_id);
-							printf("%s your Current Balance: %7.2lf\n",ptr->name,ptr->balance);
-							break;
-						}
+						printf("Can't Transfer. %s you are at low balance\n",ptr->name);
+						transfer_flag=1;
+						return 0;
 					}
 
-				}
-
-				if(strcmp(ptr->customer_id,d_account)==0)
-				{
-					ptr->balance=ptr->balance+amt;//storing amount in pointer
-					printf("Rs. %7.2lf credited to account %s\n",amt,ptr->customer_id);
-					printf("%s your balance is Rs. %7.2lf\n",ptr->name,ptr->balance);
-					//return 0;
-
+					else if((strcmp(ptr->account_type,"SB")==0 && amt >50000) || (strcmp(ptr->account_type,"CA")==0 && amt > 100000)) //checks if account type is SB then amount should be less than 50000 and if account type is CA then amount should be less than 100000
+					{
+						printf("Amount cannot be greater than 50000 for Savings Account and 100000 for Current Account");
+						transfer_flag=1;
+						return 0;
+						//continue;
+					}
+					else
+					{
+						printf("After deduction %7.2lf\n",after_balance);
+						ptr->balance = ptr->balance-amt;//storing the amount in pointer
+						printf("Rs. %lf Debited from account %s\n",amt,ptr->customer_id);
+						printf("%s your Current Balance: %7.2lf\n",ptr->name,ptr->balance);
+						break;
+					}
 				}
 			}
+			if(transfer_flag==0)
+			{
+				for(ptr=start;(ptr);ptr=ptr->next)
+				{
+					if(strcmp(ptr->customer_id,d_account)==0)
+					{
+						ptr->balance=ptr->balance+amt;//storing amount in pointer
+						printf("Rs. %7.2lf credited to account %s\n",amt,ptr->customer_id);
+						printf("%s your balance is Rs. %7.2lf\n",ptr->name,ptr->balance);
+						//return 0;
+	
+					}
+				}
+			}
+			
 		}
 		else
 		{
