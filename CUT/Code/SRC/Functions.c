@@ -122,7 +122,7 @@ int createAccount() //This function is to create an account
 		}
 	}
 
-   	strcpy(customer_id,strupr(account_type)); //Copying account type in customer id
+   	strcpy(customer_id,account_type); //Copying account type in customer id
     strcat(customer_id,aadhar_no); //Concatenate customer id and addhar no
 
 	strcpy(new_acc->name,name); // Storing local variable of name in pointer of customer structure
@@ -301,7 +301,7 @@ int editCustomer() //Edit the details of customer details with all validations
 				}
 				else
 				{
-					strcpy(ptr->account_type,strupr(m_account_type));
+					strcpy(ptr->account_type,m_account_type);
 					strcpy(ptr->customer_id,m_account_type);
 					strcat(ptr->customer_id,m_aadhar_no);
 					printf("New account type : %s",ptr->customer_id);
@@ -312,7 +312,7 @@ int editCustomer() //Edit the details of customer details with all validations
 			else if(strcasecmp(m_account_type,"SB")==0)
 			{
 
-				strcpy(ptr->account_type,strupr(m_account_type));
+				strcpy(ptr->account_type,m_account_type);
 				strcpy(ptr->customer_id,m_account_type);
 				strcat(ptr->customer_id,m_aadhar_no);
 				printf("\nNew account type : %s",ptr->customer_id);
