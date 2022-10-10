@@ -116,7 +116,7 @@ char * getpassword()
 	ssize_t nchr=0;
 	nchr=password(&pt,MAXPW,'*',fp);
 	//Taking Input password
-	printf("\nEnter passowrd:\n");
+	printf("\nEnter password:\n");
 	nchr=password(&pt,MAXPW,'*',fp);
 	return pt;
 }

@@ -1,4 +1,4 @@
-#include <stdio.h> //Include required header files
+#include<stdio.h> //Include required header files
 #include<stdlib.h>
 #include<string.h>
 #include<ctype.h>
@@ -21,14 +21,15 @@ int createAccount() //This function is to create an account
 	printf("\n\n Create Your Account\n");
 	while(1)
 	{
-		printf("\nEnter Your Name:\n");
+		printf("\nEnter Your Name:(Note:Length of the name should not be less than 3 and greater than 20)\n");
 		fflush(stdin);
-		scanf("%s",name);
+		getchar();
+		scanf("%[^\n]s",name);
 		int len;
 		int flag=0;
 		for(int i=0;i<strlen(name);i++)
 		{
-			if(!isalpha(name[i])) //check() function is used to check whether the name is in number or alphabet, if number then it return 0
+			if(!isalpha(name[i]) && !isspace(name[i])) //check() function is used to check whether the name is in number or alphabet, if number then it return 0
 			{
 				flag=1;
 				break;
@@ -40,7 +41,7 @@ int createAccount() //This function is to create an account
 			continue;
 		}
 		len=strlen(name);
-		if(len<3||len>20) //Checks the length of the name, as it should not be less than 3 and greater than 20
+		if(len<=3||len>=20) //Checks the length of the name, as it should not be less than 3 and greater than 20
 		{
 			printf("Invalid Length!! Length should not exceed 20 charecters\n");
 			continue;
@@ -50,12 +51,19 @@ int createAccount() //This function is to create an account
 			break;
 		}
 	}
-		long int aadhar;
-		int flag=0;
-		while(1)
+	long int aadhar;
+	int flag=0;
+	while(1)
+	{
+		printf("\nEnter aadhar no:\n");
+		scanf("%ld",&aadhar);
+		if(aadhar<100000000000 || aadhar>999999999999) //Checking the length of Aadhar number as it should be of 12 digits only else it will print invalid message
 		{
-			printf("\nEnter aadhar no:\n");
-			scanf("%ld",&aadhar);
+			printf("\nInvalid Length!! Length should only of 12 digits.\n");
+			continue;
+		}
+		else
+		{
 			for(ptr=start;(ptr);ptr=ptr->next)
 			{
 				if(ptr->aadhar_no==aadhar)
@@ -69,57 +77,53 @@ int createAccount() //This function is to create an account
 				printf("Already exist!!");
 				return 0;
 			}
-			if(aadhar<100000000000 || aadhar>999999999999) //Checking the length of Aadhar number as it should be of 12 digits only else it will print invalid message
+			else
 			{
-				printf("\nInvalid Length!! Length should only of 12 digits.\n");
-				continue;
-			}
-
-
-			else{
 				break;
 			}
-		}
-			sprintf(aadhar_no,"%ld",aadhar); //stores integer in string
+		}	
+	}
+	sprintf(aadhar_no,"%ld",aadhar); //stores integer in string
 
 //	printf("\nEnter your password: \n");
 //	scanf("%s",password);
-        char *pr=getpassword(); //storing password in pointer
+    char *pr=getpassword(); //storing password in pointer
 
 	while(1)
 	{
 		//Taking input of account type
-		printf("\nEnter your account type:\n");
+		printf("\nEnter your account type:(CA or SB)\n");
 	        scanf("%s",account_type);
-		if((strcmp(account_type,"SB")==0) ||(strcmp(account_type,"CA")==0)) //To check account type. It should be SA or CA.
+		if((strcasecmp(account_type,"SB")==0) ||(strcasecmp(account_type,"CA")==0)) //To check account type. It should be SB or CA.
 		{
 
 			break;
 		}
-		else{
+		else
+		{
 			printf("\nInvalid account type!!\n");
-		     continue;
+		    continue;
 		}
 	}
 
 	while(1)
 	{
 		//Taking the input of amount
-        	printf("\nEnter your amount:\n");
-	        scanf("%lf",&amount);
-			if((strcmp(account_type,"SB")==0 && amount<5000) || (strcmp(account_type,"CA")==0 && amount < 10000)) //Checking if Account type is SA and then amount should be greater than 5000 and if account type is CA then amount should be greater than 10000
-			{
-				printf("\nMinimum amount should not be less than 5000 SA and less than 10000 for CA\n");
-				continue;
-			}
-			else
-			{
-				break;
-			}
+    	printf("\nEnter your amount:(Note:Minimum amount should not be less than 5000 for SB and less than 10000 for CA)\n");
+        scanf("%lf",&amount);
+		if((strcasecmp(account_type,"SB")==0 && amount<5000) || (strcasecmp(account_type,"CA")==0 && amount < 10000)) //Checking if Account type is SB and then amount should be greater than 5000 and if account type is CA then amount should be greater than 10000
+		{
+			printf("\nMinimum amount should not be less than 5000 SB and less than 10000 for CA\n");
+			continue;
+		}
+		else
+		{
+			break;
+		}
 	}
 
-       	strcpy(customer_id,account_type); //Copying account type in customer id
-        strcat(customer_id,aadhar_no); //Concatenate customer id and addhar no
+   	strcpy(customer_id,strupr(account_type)); //Copying account type in customer id
+    strcat(customer_id,aadhar_no); //Concatenate customer id and addhar no
 
 	strcpy(new_acc->name,name); // Storing local variable of name in pointer of customer structure
 	strcpy(new_acc->customer_id,customer_id); //Storing  local customer_id in pointer of customer structure
@@ -129,8 +133,8 @@ int createAccount() //This function is to create an account
 	new_acc->balance=amount; //storing amount in pointer
 
 	printf("\nYour account is created successfully!!!!\n");
-      customer_id[strlen(customer_id)]='\0';
-        printf("\nThis is your customer id: %s\n",customer_id);
+    customer_id[strlen(customer_id)]='\0';
+    printf("\nThis is your customer id: %s\n",customer_id);
 	if(!start)
 	{
 		start=new_acc;
@@ -218,11 +222,11 @@ int getCustomerReport() //View customer report
 		return(1);
 	}
 	printf("\n--Customer Report--\n");
-	printf("\n CUSTOMER_ID    AADHAR_NO      NAME    PASSWORD    ACCOUNT_TYPE     BALANCE\n\n");
+	printf("\n CUSTOMER_ID\tAADHAR_NO\tNAME\tACCOUNT_TYPE\tBALANCE\n\n");
 	for(ptr=start;ptr;ptr=ptr->next)
 	{
-		printf("\n %s        %ld        %s         %s        %s         %8.21f \n",ptr->customer_id,ptr->aadhar_no,ptr->name,ptr->password,ptr->account_type,ptr->balance);
-}
+		printf("\n %s\t%ld\t%s\t%s\t%8.2lf \n",ptr->customer_id,ptr->aadhar_no,ptr->name,ptr->account_type,ptr->balance);
+	}
 
 }
 
@@ -244,21 +248,22 @@ int editCustomer() //Edit the details of customer details with all validations
 		printf("\n%d Customer id not found\n",m_customer_id);
 		return(1);
 	}
-	printf("\nThe old customer name %s , account type %s and balance of customer id %s is %7.21f\n",ptr->name,ptr->account_type,ptr->customer_id,ptr->balance);
+	printf("\nThe old customer name %s , account type %s and balance of customer id %s is %7.2lf\n",ptr->name,ptr->account_type,ptr->customer_id,ptr->balance);
 
-	while(1)
+	while(1) //edit name
 
 	{
 		sprintf(m_aadhar_no,"%ld",ptr->aadhar_no);
 		//Taking input of customer name
-		printf("\nEnter Your Name:\n");
+		printf("\nEnter Your Name:(Note:Length of the name should not be less than 3 and greater than 20)\n");
 		fflush(stdin);
-		scanf("%s",name);
+		getchar();
+		scanf("%[^\n]s",name);
 		int len;
 		int flag=0;
-		for(int i=0;name[i]!='\0';i++)
+		for(int i=0;i<strlen(name);i++)
 		{
-			if(!isalpha(name[i])) //isalpha() function is used to check if user gives numbers in name section then it will not accept the name
+			if(!isalpha(name[i]) && !isspace(name[i])) //check() function is used to check whether the name is in number or alphabet, if number then it return 0
 			{
 				flag=1;
 				break;
@@ -266,13 +271,13 @@ int editCustomer() //Edit the details of customer details with all validations
 		}
 		if(flag==1)
 		{
-			printf("Invalid name.Name should contain only alphabets\n");
+			printf("Invalid name!! Name should contain only alphabets\n");
 			continue;
 		}
 		len=strlen(name);
-		if(len<3||len>20) //Checking that length of the name should be less than 20 and greater than 3
+		if(len<=3||len>=20) //Checks the length of the name, as it should not be less than 3 and greater than 20
 		{
-			printf("Invalid Length.Length should not exceed 20 charecters\n");
+			printf("Invalid Length!! Length should not exceed 20 charecters\n");
 			continue;
 		}
 		else
@@ -284,10 +289,10 @@ int editCustomer() //Edit the details of customer details with all validations
 	{
 		printf("\nEnter the new account type\n");
 		scanf("%s",&m_account_type);
-		if((strcmp(m_account_type,"SB")==0) || (strcmp(m_account_type,"CA")==0))
+		if((strcasecmp(m_account_type,"SB")==0) || (strcasecmp(m_account_type,"CA")==0))
 		{
 
-			if(strcmp(m_account_type,"CA")==0)
+			if(strcasecmp(m_account_type,"CA")==0)
 			{
 				if(ptr->balance<10000)
 				{
@@ -296,7 +301,7 @@ int editCustomer() //Edit the details of customer details with all validations
 				}
 				else
 				{
-					strcpy(ptr->account_type,m_account_type);
+					strcpy(ptr->account_type,strupr(m_account_type));
 					strcpy(ptr->customer_id,m_account_type);
 					strcat(ptr->customer_id,m_aadhar_no);
 					printf("New account type : %s",ptr->customer_id);
@@ -304,10 +309,10 @@ int editCustomer() //Edit the details of customer details with all validations
 					break;
 				}
 			}
-			else if(strcmp(m_account_type,"SA")==0)
+			else if(strcasecmp(m_account_type,"SB")==0)
 			{
 
-				strcpy(ptr->account_type,m_account_type);
+				strcpy(ptr->account_type,strupr(m_account_type));
 				strcpy(ptr->customer_id,m_account_type);
 				strcat(ptr->customer_id,m_aadhar_no);
 				printf("\nNew account type : %s",ptr->customer_id);
@@ -336,6 +341,7 @@ int deleteCustomer() //Delete customer details
 	if(strcmp(m_customer_id,start->customer_id)==0)
 	{
 		ptr=start;
+		printf("\nThe record of customer id %s having name %s is deleted succesfully\n\n",ptr->customer_id,ptr->name);
 		start=ptr->next;
 		free(ptr);
 	}
@@ -347,7 +353,7 @@ int deleteCustomer() //Delete customer details
 			printf("\n%s Customer id not found\n",m_customer_id);
 			return(1);
 		}
-		printf("\nThe record of customer id %s deleted succesfully\n\n",ptr->customer_id);
+		printf("\nThe record of customer id %s having name %s is deleted succesfully\n\n",ptr->customer_id,ptr->name);
 		prev->next=ptr->next;
 		free(ptr);
 	}
@@ -403,11 +409,11 @@ int getTransactionReport() //display transaction report*
 		return(1);
 	}
 	printf("\n--Transaction Report--\n");
-	printf("\n SOURCE   DESTINATION    AMOUNT\n\n");
+	printf("\n SOURCE\t\t DESTINATION\t\t AMOUNT\n\n");
 	for(ptr1=start1;ptr1;ptr1=ptr1->next)
 	{
 
-		printf("\n %s         %s           %7.21f \n",ptr1->s_account,ptr1->d_account,ptr1->amount);
+		printf("\n %s\t%s\t%7.2lf \n",ptr1->s_account,ptr1->d_account,ptr1->amount);
 	}
 
 }
