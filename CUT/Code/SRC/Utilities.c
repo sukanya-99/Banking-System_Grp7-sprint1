@@ -277,8 +277,8 @@ void *doTransfer()// Transfer money from one account to another account
 						{
 							printf("After deduction %7.2lf\n",after_balance);
 							ptr->balance = ptr->balance-amt;//storing the amount in pointer
-							printf("Rs. %lf Debited\n",amt);
-							printf("Current Balance: %7.2lf\n",ptr->balance);
+							printf("Rs. %lf Debited from account %s\n",amt,ptr->customer_id);
+							printf("%s your Current Balance: %7.2lf\n",ptr->name,ptr->balance);
 							break;
 						}
 					}
@@ -288,8 +288,8 @@ void *doTransfer()// Transfer money from one account to another account
 				if(strcmp(ptr->customer_id,d_account)==0)
 				{
 					ptr->balance=ptr->balance+amt;//storing amount in pointer
-					printf("Rs. %7.2lf credited to account\n",amt);
-					printf("Your balance is Rs. %7.2lf\n",ptr->balance);
+					printf("Rs. %7.2lf credited to account %s\n",amt,ptr->customer_id);
+					printf("%s your balance is Rs. %7.2lf\n",ptr->name,ptr->balance);
 					//return 0;
 
 				}
