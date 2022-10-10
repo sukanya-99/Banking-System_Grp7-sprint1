@@ -1,13 +1,8 @@
-OBJ=main.o
-CO=gcc -o
-CC=gcc -c
-RM=rm *.o
+final: main.o 
+	gcc bin/main.o -o bin/final.exe
 
-final:	main.o
-	$(CO) final $(OBJ) -g -lpthread
-
-main.o:	SRC/main.c
-	$(CC) SRC/main.c
+main.o: SRC/main.c 
+	gcc -c SRC/main.c -o bin/main.o
 
 clean: 
-	$(RM) final
+	rm -rf ./bin/main.o ./bin/final.exe
