@@ -1,29 +1,19 @@
-
 /************************************************************************************
  *   FILENAME    :   Password.c
  *
  *   DESCRIPTION :   This file is used for masking and checking the password when and
  *                   customer/user logging in
  *
- *   REVISION HISTORY
- *
- *   DATE            NAME             REASON
- *
- *  -------------------------------------------
- *
- *   25/05/2022    Username           Validate password
- *
+
  * ***********************************************************************************/
 #include<stdio.h>  //Include all header files
 #include<stdlib.h>
 #include<string.h>
 #include<termios.h>
 #include<ctype.h>
-//#include "/home/cguser2/project_group5/cut/Code/Header/Header2.h"
 #include "../Header/Function.h"
 #define MAXPW 32
 ssize_t password(char **pw,size_t sz,int mask,FILE *fp)
-
 {
 	if(!pw || !sz||!fp)return -1;   // validate input
 #ifdef MAXPW
