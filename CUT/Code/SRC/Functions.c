@@ -43,7 +43,7 @@ int createAccount() //This function is to create an account
 		len=strlen(name);
 		if(len<=3||len>=20) //Checks the length of the name, as it should not be less than 3 and greater than 20
 		{
-			printf("Invalid Length!! Length should not exceed 20 charecters\n");
+			printf("Invalid Length!! Length should not be less than 3 characters ans should not exceed 20 charecters\n");
 			continue;
 		}
 		else

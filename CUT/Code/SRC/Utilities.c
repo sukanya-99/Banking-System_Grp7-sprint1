@@ -95,11 +95,12 @@ void *doTransaction()//allows user to withdraw and deposit amount
 	}
 	srand((unsigned) time(&t1));//generates a random unique number for token
 	auto_token=rand() % 50;
-        pthread_mutex_lock(&lock); //release mutex object
+        
 	printf("\n Your token for current transaction is %d\n",auto_token);
-	pthread_mutex_unlock(&lock); //lock a mutex object which identifies a mutex
+	
 	printf("\n PLEASE CONFIRM YOUR TOKEN\n");
 	scanf("%d",&token);
+	pthread_mutex_lock(&lock); //release mutex object
 	if(token==auto_token)//checks the token
 	{
 
@@ -109,7 +110,7 @@ void *doTransaction()//allows user to withdraw and deposit amount
 			if(ptr==NULL)//checks if pointer is null then it will print id is not found else it will do transaction
 			{
 				printf("\n%s Customer id is not Found\n",m_customer_id);
-
+				pthread_mutex_unlock(&lock); //lock a mutex object which identifies a mutex
 				return 0;
 			}
 			else
@@ -150,7 +151,7 @@ void *doTransaction()//allows user to withdraw and deposit amount
 				if(ptr==NULL) //checks if customer id is valid if not then it will print customer id not found
 				{
 					printf("\n%s Customer id not found\n",m_customer_id);
-
+					pthread_mutex_unlock(&lock); //lock a mutex object which identifies a mutex
 					return 0;
 				}
 				else
@@ -176,11 +177,12 @@ void *doTransaction()//allows user to withdraw and deposit amount
 
 					}
 				}
+				pthread_mutex_unlock(&lock); //lock a mutex object which identifies a mutex
 			}
 
 	}
 	else
-	{
+	{	pthread_mutex_unlock(&lock); //lock a mutex object which identifies a mutex
 		return 0;
 	}
 }
@@ -197,6 +199,7 @@ void *doTransfer()// Transfer money from one account to another account
 	double amount=0,after_balance=0;
 	int Banker_Pass=0;
 	Banker_Pass=checkpassword(); //storing the password
+	pthread_mutex_lock(&lock); //lock the mutex
 	if(Banker_Pass==1)//checking the password and if its wroong it wiil print invalid password
 	{
 		printf("\nINVALID PASSWORD!!!\n");
@@ -248,7 +251,7 @@ void *doTransfer()// Transfer money from one account to another account
 		scanf("%lf",&amt);
 		srand((unsigned) time(&t1)); //generates random unique token no
 		auto_token=rand() % 50;
-                pthread_mutex_lock(&lock); //lock mutex object
+               
 
 		printf("\n YOUR TOKEN FOR CURRENT TRANSACTION IS %d\n",auto_token);
                 pthread_mutex_unlock(&lock); //release mutex object
@@ -265,6 +268,7 @@ void *doTransfer()// Transfer money from one account to another account
 					{
 						printf("Can't Transfer. %s you are at low balance\n",ptr->name);
 						transfer_flag=1;
+						pthread_mutex_unlock(&lock); //release mutex object
 						return 0;
 					}
 
@@ -299,11 +303,12 @@ void *doTransfer()// Transfer money from one account to another account
 					}
 				}
 			}
-			
+			 pthread_mutex_unlock(&lock); //release mutex object
 		}
 		else
 		{
 			printf("\n INVALID TOKEN!!!!!\n");
+			pthread_mutex_unlock(&lock); //release mutex object
 			return 0;
 		}
 		strcpy(new1->s_account,s_account);//storing local variable of source account  in structure variable to create linked list
@@ -326,5 +331,7 @@ void *doTransfer()// Transfer money from one account to another account
 		}
 		printf("\n");
 	}
+	pthread_mutex_unlock(&lock);//release mutex lock
+	return 0;
 }
 
