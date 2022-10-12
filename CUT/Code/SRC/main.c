@@ -11,9 +11,6 @@ void gotoxy(int x, int y) // Sets co-ordinates in (x,y)
 }
 int main()               // This is the Main function.
 {
-
-	//customer_file_to_list(); //Calling file to list function of customer corner
-	
 	start=ptr=last=prev=new_acc=NULL; //Declares all pointer of customer structure as NULL
 	start1=last1=ptr1=new1=NULL; //Declares all pointer of transaction structure as NULL
 	int choice=0;

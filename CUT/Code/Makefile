@@ -1,21 +1,8 @@
-SRC = ../SRC
-INC = -I../Header
-BIN = ../bin
-DATA = ../Data
-CFLAGS = -c -g
-LINK = -lpthread
-OBJ_CL = *.o
-G = gcc
-M = main.o
-MAIN = main.c
-T = final
-test: $(M)	
-	$(G)	$(BIN)/$(M)	$(INC) -o $(BIN)/test	$(LINK)
-$(M):	
-	$(G)	$(CFLAGS)	$(SRC)/$(MAIN)	$(INC)	-o $(BIN)/$(M)	$(LINK)
-run:	
-	./$(BIN)/test	
+final: main.o 
+	gcc bin/main.o -o bin/final.exe
+
+main.o: SRC/main.c 
+	gcc -c SRC/main.c -o bin/main.o
 
 clean: 
-	rm $(BIN)/$(M)	$(BIN)/$(T)	
-	rm $(DATA)/Customer_File	$(DATA)/Transaction_File
+	rm -rf ./bin/main.o ./bin/final.exe

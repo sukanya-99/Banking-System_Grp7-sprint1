@@ -84,9 +84,7 @@ int createAccount() //This function is to create an account
 		}	
 	}
 	sprintf(aadhar_no,"%ld",aadhar); //stores integer in string
-
-//	printf("\nEnter your password: \n");
-//	scanf("%s",password);
+	
     char *pr=getpassword(); //storing password in pointer
 
 	while(1)
